@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Scrap Metal Buyer | Nickel, Molybdenum & Tool Steel Alloys</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --steel-dark: #1a1d21;
+            --steel-mid: #2d3138;
+            --steel-light: #4a5058;
+            --copper-accent: #c9844a;
+            --copper-bright: #e59a52;
+            --white: #f5f5f5;
+            --white-muted: #b8bcc4;
+            --success: #4ade80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background-color: var(--steel-dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(201, 132, 74, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 132, 74, 0.1) 0%, transparent 40%),
+                linear-gradient(180deg, var(--steel-dark) 0%, var(--steel-mid) 100%);
+            z-index: -1;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(26, 29, 33, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 132, 74, 0.2);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--copper-accent), var(--copper-bright));
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--copper-accent);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--copper-accent), var(--copper-bright));
+            color: var(--steel-dark) !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--copper-accent), var(--copper-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            color: var(--white-muted);
+            margin-bottom: 2rem;
+            max-width: 540px;
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+        }
+
+        .badge-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, rgba(201, 132, 74, 0.2), rgba(201, 132, 74, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .badge-text {
+            font-size: 0.85rem;
+            color: var(--white-muted);
+        }
+
+        .badge-text strong {
+            display: block;
+            color: var(--white);
+            font-size: 1.1rem;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: linear-gradient(145deg, rgba(45, 49, 56, 0.9), rgba(26, 29, 33, 0.95));
+            border: 1px solid rgba(201, 132, 74, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--copper-accent), var(--copper-bright), var(--copper-accent));
+        }
+
+        .form-card h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-card .subtitle {
+            color: var(--white-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--white-muted);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--white);
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: var(--steel-light);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--copper-accent);
+            box-shadow: 0 0 0 3px rgba(201, 132, 74, 0.15);
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23b8bcc4' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .form-group select option {
+            background: var(--steel-dark);
+            color: var(--white);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--copper-accent), var(--copper-bright));
+            border: none;
+            border-radius: 6px;
+            color: var(--steel-dark);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 132, 74, 0.3);
+        }
+
+        .submit-btn::after {
+            content: '→';
+            margin-left: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Metals Section */
+        .metals-section {
+            padding: 6rem 5%;
+            background: var(--steel-mid);
+            position: relative;
+        }
+
+        .metals-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--copper-accent), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--white-muted);
+        }
+
+        .metals-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .metal-card {
+            background: linear-gradient(145deg, rgba(26, 29, 33, 0.8), rgba(26, 29, 33, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(201, 132, 74, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .metal-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(201, 132, 74, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .metal-card:hover::before {
+            opacity: 1;
+        }
+
+        .metal-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--copper-accent), var(--copper-bright));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metal-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        .metal-card p {
+            color: var(--white-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .metal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .metal-tags span {
+            background: rgba(201, 132, 74, 0.15);
+            color: var(--copper-bright);
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 6rem 5%;
+            background: var(--steel-dark);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--copper-accent), var(--copper-bright));
+            z-index: 0;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--steel-dark);
+            border: 3px solid var(--copper-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--copper-accent);
+        }
+
+        .step h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--white-muted);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--steel-mid), var(--steel-dark));
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(201, 132, 74, 0.08) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            color: var(--white-muted);
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--copper-accent), var(--copper-bright));
+            color: var(--steel-dark);
+            padding: 1.1rem 2.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(201, 132, 74, 0.35);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--white-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--copper-accent);
+        }
+
+        .footer-contact {
+            text-align: right;
+        }
+
+        .footer-contact p {
+            color: var(--white-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-contact a {
+            color: var(--copper-accent);
+            text-decoration: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--success), #22c55e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .success-message h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.75rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message p {
+            color: var(--white-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .trust-badges {
+                justify-content: center;
+            }
+
+            .form-card {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .metals-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-steps::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 6rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-contact {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">⬡</div>
+            METALWORKS
+        </div>
+        <ul class="nav-links">
+            <li><a href="#metals">What We Buy</a></li>
+            <li><a href="#process">How It Works</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#quote" class="nav-cta">Get Quote</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="quote">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>TOP PRICES FOR YOUR <span>PREMIUM SCRAP METALS</span></h1>
+                <p>We're trusted buyers of high-value nickel alloys, molybdenum alloys, and tool steels. Get competitive quotes, fast pickup, and reliable payment for your industrial scrap materials.</p>
+                
+                <div class="trust-badges">
+                    <div class="badge">
+                        <div class="badge-icon">🏭</div>
+                        <div class="badge-text">
+                            <strong>500+ Tons</strong>
+                            Processed Monthly
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">⚡</div>
+                        <div class="badge-text">
+                            <strong>48hr Pickup</strong>
+                            Fast Logistics
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">✓</div>
+                        <div class="badge-text">
+                            <strong>Same-Day</strong>
+                            Payment Available
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h2>GET YOUR FREE QUOTE</h2>
+                <p class="subtitle">Fill in the details below and we'll respond within 24 hours</p>
+                
+                <form id="leadForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" placeholder="John Smith" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company Name *</label>
+                            <input type="text" id="company" name="company" placeholder="ABC Recycling Ltd" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="role">Your Role</label>
+                            <input type="text" id="role" name="role" placeholder="Operations Manager">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="email">Business Email *</label>
+                        <input type="email" id="email" name="email" placeholder="john@company.com" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="scrap-category">Scrap Category *</label>
+                            <select id="scrap-category" name="scrap-category" required>
+                                <option value="">Select category...</option>
+                                <option value="nickel-alloys">Nickel Alloys</option>
+                                <option value="molybdenum-alloys">Molybdenum Alloys</option>
+                                <option value="tool-steels">Tool Steels</option>
+                                <option value="high-speed-steel">High Speed Steel</option>
+                                <option value="stainless-steel">Stainless Steel</option>
+                                <option value="tungsten-carbide">Tungsten Carbide</option>
+                                <option value="mixed-alloys">Mixed Alloys</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location *</label>
+                            <input type="text" id="location" name="location" placeholder="City, State/Country" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">REQUEST FREE QUOTE</button>
+                </form>
+
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">✓</div>
+                    <h3>QUOTE REQUEST RECEIVED!</h3>
+                    <p>Our team will contact you within 24 hours with a competitive offer.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metals Section -->
+    <section class="metals-section" id="metals">
+        <div class="section-header">
+            <h2>PREMIUM METALS WE PURCHASE</h2>
+            <p>Specializing in high-value industrial scrap with transparent pricing and immediate payment</p>
+        </div>
+
+        <div class="metals-grid">
+            <div class="metal-card">
+                <div class="metal-icon">Ni</div>
+                <h3>NICKEL ALLOYS</h3>
+                <p>Inconel, Monel, Hastelloy, and other nickel-based superalloys from aerospace and industrial applications.</p>
+                <div class="metal-tags">
+                    <span>Inconel 625</span>
+                    <span>Monel 400</span>
+                    <span>Hastelloy X</span>
+                </div>
+            </div>
+
+            <div class="metal-card">
+                <div class="metal-icon">Mo</div>
+                <h3>MOLYBDENUM ALLOYS</h3>
+                <p>Pure molybdenum, TZM alloy, and Mo-La oxide materials from high-temperature applications.</p>
+                <div class="metal-tags">
+                    <span>Pure Moly</span>
+                    <span>TZM</span>
+                    <span>Mo-La</span>
+                </div>
+            </div>
+
+            <div class="metal-card">
+                <div class="metal-icon">Fe</div>
+                <h3>TOOL STEELS</h3>
+                <p>High-speed steel, die steel, and specialty tool steels from machining and manufacturing.</p>
+                <div class="metal-tags">
+                    <span>M2 HSS</span>
+                    <span>D2 Die Steel</span>
+                    <span>H13</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section" id="process">
+        <div class="section-header">
+            <h2>HOW IT WORKS</h2>
+            <p>Simple, transparent process from quote to payment</p>
+        </div>
+
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4>SUBMIT DETAILS</h4>
+                <p>Fill out the form with your material type and quantity</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4>GET YOUR QUOTE</h4>
+                <p>Receive competitive pricing within 24 hours</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4>SCHEDULE PICKUP</h4>
+                <p>We arrange convenient collection logistics</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h4>GET PAID</h4>
+                <p>Fast payment upon material verification</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-content">
+            <h2>READY TO SELL YOUR SCRAP?</h2>
+            <p>Join hundreds of scrap yards and recyclers who trust us for fair pricing and reliable service. Get your free quote today.</p>
+            <a href="#quote" class="cta-btn">GET FREE QUOTE →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">⬡ METALWORKS</div>
+            <ul class="footer-links">
+                <li><a href="#metals">What We Buy</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+            <div class="footer-contact">
+                <p>Questions? <a href="mailto:quotes@metalworks.com">quotes@metalworks.com</a></p>
+                <p>© 2025 Metalworks. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission handling
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Hide form, show success
+            this.style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            // In production, you would send data to your backend here
+            console.log('Form submitted:', new FormData(this));
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to nav
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 29, 33, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 29, 33, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

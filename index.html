@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrap Metal Landing Page Samples | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+        }
+        .gradient-border {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            padding: 2px;
+            border-radius: 1.5rem;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-slate-950 text-white min-h-screen">
+    
+    <!-- Header -->
+    <header class="py-8 border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold">Landing Page Samples</h1>
+                    <p class="text-slate-400 text-sm mt-1">B2B Scrap Metal Industry</p>
+                </div>
+                <div class="flex items-center gap-3 text-sm text-slate-400">
+                    <i class="fas fa-code"></i>
+                    <span>HTML + Tailwind CSS</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-16">
+        <div class="max-w-6xl mx-auto px-6">
+            
+            <!-- Intro -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-4xl font-bold mb-4">Custom Landing Page Designs</h2>
+                <p class="text-lg text-slate-400">Three unique design approaches for scrap metal sourcing and lead generation. Each includes responsive design, lead capture forms, and modern UI components.</p>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Sample 1 -->
+                <div class="card-hover">
+                    <div class="gradient-border">
+                        <div class="bg-slate-900 rounded-[1.4rem] overflow-hidden">
+                            <!-- Preview Image Area -->
+                            <div class="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-600/5"></div>
+                                <div class="text-center relative z-10">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-industry text-white text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Metalworks</h3>
+                                    <p class="text-slate-400 text-sm">Dark Industrial Theme</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Card Content -->
+                            <div class="p-6">
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Pure CSS</span>
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Dark Mode</span>
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Responsive</span>
+                                </div>
+                                <p class="text-slate-400 text-sm mb-6">Industrial dark theme with copper accents. Pure HTML/CSS without framework dependencies.</p>
+                                <a href="sample-1-metalworks.html" class="flex items-center justify-center gap-2 w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-semibold transition-colors">
+                                    <span>View Demo</span>
+                                    <i class="fas fa-arrow-right text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sample 2 -->
+                <div class="card-hover">
+                    <div class="gradient-border">
+                        <div class="bg-slate-900 rounded-[1.4rem] overflow-hidden">
+                            <!-- Preview Image Area -->
+                            <div class="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-600/5"></div>
+                                <div class="text-center relative z-10">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-cubes text-white text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">AlloyTrade</h3>
+                                    <p class="text-slate-400 text-sm">Clean Corporate Theme</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Card Content -->
+                            <div class="p-6">
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Tailwind CSS</span>
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Light Mode</span>
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">6 Sections</span>
+                                </div>
+                                <p class="text-slate-400 text-sm mb-6">Professional blue corporate design with testimonials, process flow, and trust elements.</p>
+                                <a href="sample-2-alloytrade.html" class="flex items-center justify-center gap-2 w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-semibold transition-colors">
+                                    <span>View Demo</span>
+                                    <i class="fas fa-arrow-right text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sample 3 -->
+                <div class="card-hover">
+                    <div class="gradient-border">
+                        <div class="bg-slate-900 rounded-[1.4rem] overflow-hidden">
+                            <!-- Preview Image Area -->
+                            <div class="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-600/5"></div>
+                                <div class="text-center relative z-10">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-gem text-slate-900 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">MetalVault</h3>
+                                    <p class="text-slate-400 text-sm">Premium Dark Theme</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Card Content -->
+                            <div class="p-6">
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Tailwind CSS</span>
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Animations</span>
+                                    <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300">Glassmorphism</span>
+                                </div>
+                                <p class="text-slate-400 text-sm mb-6">Luxury dark theme with gold accents, animated counters, FAQ accordion, and glass effects.</p>
+                                <a href="sample-3-metalvault.html" class="flex items-center justify-center gap-2 w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-semibold transition-colors">
+                                    <span>View Demo</span>
+                                    <i class="fas fa-arrow-right text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Features Section -->
+            <div class="mt-20 pt-16 border-t border-white/10">
+                <h3 class="text-2xl font-bold text-center mb-12">All Samples Include</h3>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-mobile-alt text-blue-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Fully Responsive</h4>
+                        <p class="text-sm text-slate-400">Optimized for mobile, tablet, and desktop</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-file-alt text-green-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Lead Capture Form</h4>
+                        <p class="text-sm text-slate-400">All required fields: name, company, role, email, phone, category, location</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-bolt text-purple-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Fast Loading</h4>
+                        <p class="text-sm text-slate-400">Optimized assets and CDN-hosted libraries</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-industry text-amber-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Industry Focused</h4>
+                        <p class="text-sm text-slate-400">Content tailored for scrap metal & recycling</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10">
+        <div class="max-w-6xl mx-auto px-6 text-center text-slate-500 text-sm">
+            <p>Sample landing pages for B2B scrap metal sourcing project</p>
+        </div>
+    </footer>
+
+</body>
+</html>

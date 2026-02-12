@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetalVault | Premium Scrap Metal Acquisition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#09090b',
+                            900: '#0f0f12',
+                            800: '#18181b',
+                            700: '#27272a',
+                            600: '#3f3f46',
+                        },
+                        gold: {
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'system-ui', 'sans-serif'],
+                        display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes count-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slide-in-right {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delay { animation: float 6s ease-in-out infinite; animation-delay: -3s; }
+        .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+        .animate-gradient { 
+            background-size: 200% 200%;
+            animation: gradient-shift 8s ease infinite; 
+        }
+        .animate-fade-in { animation: fade-in-up 0.8s ease-out forwards; }
+        .animate-slide-in { animation: slide-in-right 0.6s ease-out forwards; }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-light {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
+        
+        /* Form Styling */
+        .form-input {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2), 0 0 20px rgba(251, 191, 36, 0.1);
+        }
+        
+        /* Card Hover Effects */
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-12px) scale(1.02);
+        }
+        
+        /* Progress Bar Animation */
+        .progress-fill {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Noise Texture Overlay */
+        .noise::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-dark-950 text-white overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                        <i class="fas fa-gem text-dark-950 text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight">Metal<span class="text-gold-400">Vault</span></span>
+                        <span class="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-zinc-500 -mt-1">Premium Acquisition</span>
+                    </div>
+                </a>
+
+                <!-- Nav Links -->
+                <div class="hidden lg:flex items-center gap-10">
+                    <a href="#services" class="text-zinc-400 hover:text-gold-400 font-medium transition-colors relative group">
+                        Services
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#materials" class="text-zinc-400 hover:text-gold-400 font-medium transition-colors relative group">
+                        Materials
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#process" class="text-zinc-400 hover:text-gold-400 font-medium transition-colors relative group">
+                        Process
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#faq" class="text-zinc-400 hover:text-gold-400 font-medium transition-colors relative group">
+                        FAQ
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </div>
+
+                <!-- CTA -->
+                <div class="flex items-center gap-4">
+                    <a href="tel:+18005551234" class="hidden md:flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
+                        <div class="w-9 h-9 rounded-full bg-dark-700 flex items-center justify-center">
+                            <i class="fas fa-phone text-gold-400 text-sm"></i>
+                        </div>
+                        <div class="text-sm">
+                            <div class="text-[10px] uppercase tracking-wider text-zinc-500">Call Now</div>
+                            <div class="font-semibold text-white">1-800-555-1234</div>
+                        </div>
+                    </a>
+                    <a href="#quote" class="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-dark-950 px-6 py-3 rounded-xl font-semibold transition-all hover:shadow-lg hover:shadow-gold-500/25 flex items-center gap-2">
+                        <span>Get Quote</span>
+                        <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden noise" id="quote">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 -left-20 w-96 h-96 bg-gold-500/10 rounded-full blur-[100px] animate-float"></div>
+            <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-gold-600/10 rounded-full blur-[80px] animate-float-delay"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-gold-500/5 to-transparent rounded-full blur-[60px]"></div>
+        </div>
+
+        <!-- Grid Pattern -->
+        <div class="absolute inset-0 opacity-[0.02]" style="background-image: linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left Content -->
+                <div class="space-y-8">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-3 glass rounded-full px-5 py-2.5">
+                        <span class="flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span class="text-sm text-zinc-300">Now Buying: <span class="text-gold-400 font-semibold">Aerospace-Grade Alloys</span></span>
+                    </div>
+
+                    <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
+                        Maximum Value for
+                        <span class="gradient-text"> Premium Scrap</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-xl">
+                        Industry-leading prices for nickel alloys, molybdenum, and tool steels. 
+                        Transparent XRF testing, 48-hour pickup, and same-day payment.
+                    </p>
+
+                    <!-- Live Stats -->
+                    <div class="grid grid-cols-3 gap-6 py-8 border-y border-white/5">
+                        <div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-bold text-white counter" data-target="847">0</span>
+                                <span class="text-gold-400 text-xl">+</span>
+                            </div>
+                            <div class="text-sm text-zinc-500 mt-1">Partner Yards</div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-bold text-white">$</span>
+                                <span class="text-4xl font-bold text-white counter" data-target="127">0</span>
+                                <span class="text-gold-400 text-xl">M</span>
+                            </div>
+                            <div class="text-sm text-zinc-500 mt-1">Paid Annually</div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-4xl font-bold text-white counter" data-target="24">0</span>
+                                <span class="text-gold-400 text-xl">hr</span>
+                            </div>
+                            <div class="text-sm text-zinc-500 mt-1">Quote Turnaround</div>
+                        </div>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="flex flex-wrap items-center gap-6">
+                        <div class="flex items-center gap-2 text-zinc-400">
+                            <i class="fas fa-shield-check text-emerald-500"></i>
+                            <span class="text-sm">ISRI Certified</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-zinc-400">
+                            <i class="fas fa-award text-emerald-500"></i>
+                            <span class="text-sm">R2 Responsible</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-zinc-400">
+                            <i class="fas fa-certificate text-emerald-500"></i>
+                            <span class="text-sm">ISO 14001</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right - Premium Form Card -->
+                <div class="relative">
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-gold-400/20 to-transparent rounded-full blur-2xl"></div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-tr from-gold-500/10 to-transparent rounded-full blur-2xl"></div>
+                    
+                    <div class="relative glass rounded-3xl p-8 lg:p-10 border border-white/10 shadow-2xl shadow-black/50">
+                        <!-- Form Header -->
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold">Request Quote</h2>
+                                <p class="text-zinc-500 text-sm mt-1">Get pricing in 24 hours</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center animate-pulse-glow">
+                                <i class="fas fa-bolt text-dark-950 text-lg"></i>
+                            </div>
+                        </div>
+
+                        <form id="leadForm" class="space-y-5">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-zinc-400">Full Name</label>
+                                    <input type="text" name="name" required placeholder="John Smith" 
+                                        class="form-input w-full px-4 py-3.5 bg-dark-800/50 border border-white/10 rounded-xl text-white placeholder:text-zinc-600 focus:border-gold-500/50 focus:outline-none">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-zinc-400">Company</label>
+                                    <input type="text" name="company" required placeholder="ABC Metals Inc" 
+                                        class="form-input w-full px-4 py-3.5 bg-dark-800/50 border border-white/10 rounded-xl text-white placeholder:text-zinc-600 focus:border-gold-500/50 focus:outline-none">
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-zinc-400">Your Role</label>
+                                    <input type="text" name="role" placeholder="Operations Director" 
+                                        class="form-input w-full px-4 py-3.5 bg-dark-800/50 border border-white/10 rounded-xl text-white placeholder:text-zinc-600 focus:border-gold-500/50 focus:outline-none">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-zinc-400">Phone</label>
+                                    <input type="tel" name="phone" required placeholder="+1 (555) 000-0000" 
+                                        class="form-input w-full px-4 py-3.5 bg-dark-800/50 border border-white/10 rounded-xl text-white placeholder:text-zinc-600 focus:border-gold-500/50 focus:outline-none">
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-zinc-400">Business Email</label>
+                                <input type="email" name="email" required placeholder="john@company.com" 
+                                    class="form-input w-full px-4 py-3.5 bg-dark-800/50 border border-white/10 rounded-xl text-white placeholder:text-zinc-600 focus:border-gold-500/50 focus:outline-none">
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-zinc-400">Material Category</label>
+                                    <div class="relative">
+                                        <select name="category" required 
+                                            class="form-input w-full px-4 py-3.5 bg-dark-800/50 border border-white/10 rounded-xl text-white focus:border-gold-500/50 focus:outline-none appearance-none cursor-pointer">
+                                            <option value="" class="bg-dark-800">Select material</option>
+                                            <option value="nickel" class="bg-dark-800">Nickel Alloys</option>
+                                            <option value="moly" class="bg-dark-800">Molybdenum</option>
+                                            <option value="tool-steel" class="bg-dark-800">Tool Steels</option>
+                                            <option value="hss" class="bg-dark-800">High Speed Steel</option>
+                                            <option value="tungsten" class="bg-dark-800">Tungsten Carbide</option>
+                                            <option value="stainless" class="bg-dark-800">Stainless Steel</option>
+                                            <option value="mixed" class="bg-dark-800">Mixed / Other</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"></i>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-zinc-400">Location</label>
+                                    <input type="text" name="location" required placeholder="City, State" 
+                                        class="form-input w-full px-4 py-3.5 bg-dark-800/50 border border-white/10 rounded-xl text-white placeholder:text-zinc-600 focus:border-gold-500/50 focus:outline-none">
+                                </div>
+                            </div>
+
+                            <button type="submit" 
+                                class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:via-gold-400 hover:to-gold-500 text-dark-950 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:shadow-xl hover:shadow-gold-500/30 flex items-center justify-center gap-3 group animate-gradient">
+                                <span>Get My Free Quote</span>
+                                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+
+                            <p class="text-center text-xs text-zinc-500 flex items-center justify-center gap-2">
+                                <i class="fas fa-lock text-zinc-600"></i>
+                                256-bit SSL encrypted. Your data is never shared.
+                            </p>
+                        </form>
+
+                        <!-- Success State -->
+                        <div id="successState" class="hidden text-center py-10">
+                            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center animate-pulse-glow" style="--tw-shadow-color: rgba(52, 211, 153, 0.3);">
+                                <i class="fas fa-check text-dark-950 text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Quote Request Received!</h3>
+                            <p class="text-zinc-400">Our team will contact you within 24 hours with competitive pricing for your materials.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-24 relative" id="services">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="inline-flex items-center gap-2 text-gold-400 text-sm font-semibold tracking-wider uppercase mb-4">
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                    Why Partner With Us
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                </div>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold mb-6">The MetalVault Advantage</h2>
+                <p class="text-lg text-zinc-400">We've refined every step of the scrap metal acquisition process to maximize value for our partners.</p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="group glass rounded-2xl p-8 hover-lift border border-white/5 hover:border-gold-500/30">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-400/20 to-gold-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chart-line text-gold-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Real-Time Pricing</h3>
+                    <p class="text-zinc-400 leading-relaxed">Quotes based on live LME rates. Our proprietary algorithm ensures you always get top-market value.</p>
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                            <i class="fas fa-trending-up"></i>
+                            <span>15% above average market</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group glass rounded-2xl p-8 hover-lift border border-white/5 hover:border-gold-500/30">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400/20 to-emerald-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-truck-moving text-emerald-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Nationwide Logistics</h3>
+                    <p class="text-zinc-400 leading-relaxed">Our fleet covers all 50 states. Schedule pickup online and we handle everything from there.</p>
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                            <i class="fas fa-clock"></i>
+                            <span>48-hour average pickup</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group glass rounded-2xl p-8 hover-lift border border-white/5 hover:border-gold-500/30">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400/20 to-blue-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-microscope text-blue-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">XRF Verification</h3>
+                    <p class="text-zinc-400 leading-relaxed">Certified handheld XRF analysis on-site. Know exactly what your material contains before we buy.</p>
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                            <i class="fas fa-certificate"></i>
+                            <span>NIST-certified equipment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="group glass rounded-2xl p-8 hover-lift border border-white/5 hover:border-gold-500/30">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400/20 to-purple-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-bolt text-purple-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Instant Payment</h3>
+                    <p class="text-zinc-400 leading-relaxed">Same-day wire transfers available. No waiting weeks for checks to clear.</p>
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                            <i class="fas fa-bolt"></i>
+                            <span>ACH, Wire, or Check</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="group glass rounded-2xl p-8 hover-lift border border-white/5 hover:border-gold-500/30">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-400/20 to-rose-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-user-tie text-rose-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Dedicated Rep</h3>
+                    <p class="text-zinc-400 leading-relaxed">Your personal account manager knows your business and handles all transactions.</p>
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                            <i class="fas fa-headset"></i>
+                            <span>Direct line access</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="group glass rounded-2xl p-8 hover-lift border border-white/5 hover:border-gold-500/30">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-file-contract text-amber-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Clear Documentation</h3>
+                    <p class="text-zinc-400 leading-relaxed">Digital scale tickets, material reports, and payment confirmations—all in your portal.</p>
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                            <i class="fas fa-cloud"></i>
+                            <span>24/7 online access</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Materials Section -->
+    <section class="py-24 bg-dark-900 relative overflow-hidden" id="materials">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-gold-600/5 rounded-full blur-[100px]"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="inline-flex items-center gap-2 text-gold-400 text-sm font-semibold tracking-wider uppercase mb-4">
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                    What We Buy
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                </div>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold mb-6">Premium Materials We Acquire</h2>
+                <p class="text-lg text-zinc-400">Specialists in high-value specialty alloys with transparent grading and premium pricing.</p>
+            </div>
+
+            <!-- Materials Cards -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Nickel Alloys -->
+                <div class="group relative rounded-3xl overflow-hidden hover-lift">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-blue-800/10 to-transparent"></div>
+                    <div class="relative glass-light p-10 h-full border border-white/10">
+                        <!-- Element Badge -->
+                        <div class="absolute top-6 right-6 w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex flex-col items-center justify-center shadow-lg shadow-blue-500/20">
+                            <span class="text-3xl font-bold text-white">Ni</span>
+                            <span class="text-[10px] text-blue-100">28</span>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold mb-2">Nickel Alloys</h3>
+                            <p class="text-zinc-500 text-sm">Superalloys & High-Temp Materials</p>
+                        </div>
+                        
+                        <p class="text-zinc-400 mb-8">Premium pricing for aerospace-grade Inconel, Monel, Hastelloy, and other nickel-based superalloys. We accept turnings, solids, and mixed lots.</p>
+                        
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">Inconel 625/718</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">Monel 400/K500</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">Hastelloy C276/X</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium">Aerospace</span>
+                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium">Marine</span>
+                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium">Chemical</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Molybdenum -->
+                <div class="group relative rounded-3xl overflow-hidden hover-lift">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 via-emerald-800/10 to-transparent"></div>
+                    <div class="relative glass-light p-10 h-full border border-white/10">
+                        <!-- Element Badge -->
+                        <div class="absolute top-6 right-6 w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex flex-col items-center justify-center shadow-lg shadow-emerald-500/20">
+                            <span class="text-3xl font-bold text-white">Mo</span>
+                            <span class="text-[10px] text-emerald-100">42</span>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold mb-2">Molybdenum</h3>
+                            <p class="text-zinc-500 text-sm">Refractory & High-Purity</p>
+                        </div>
+                        
+                        <p class="text-zinc-400 mb-8">Pure molybdenum, TZM, and Mo-La materials from furnace parts, electrodes, and aerospace components. All forms accepted.</p>
+                        
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">Pure Moly (99.9%)</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">TZM Alloy</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">Mo-La Oxide</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">Furnace</span>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">Electronics</span>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">Medical</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool Steels -->
+                <div class="group relative rounded-3xl overflow-hidden hover-lift">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-600/20 via-orange-800/10 to-transparent"></div>
+                    <div class="relative glass-light p-10 h-full border border-white/10">
+                        <!-- Element Badge -->
+                        <div class="absolute top-6 right-6 w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex flex-col items-center justify-center shadow-lg shadow-orange-500/20">
+                            <span class="text-3xl font-bold text-white">Fe</span>
+                            <span class="text-[10px] text-orange-100">26</span>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold mb-2">Tool Steels</h3>
+                            <p class="text-zinc-500 text-sm">HSS & Specialty Grades</p>
+                        </div>
+                        
+                        <p class="text-zinc-400 mb-8">High-speed steel, die steel, and specialty tool steels from machining operations. Separated or mixed grades welcome.</p>
+                        
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">M2/M42 HSS</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">D2/D3 Die Steel</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-zinc-500">H13/A2 Tool Steel</span>
+                                <span class="text-emerald-400 font-semibold">Top Dollar</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium">Machining</span>
+                            <span class="px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium">Tooling</span>
+                            <span class="px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium">Die Cast</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-24 relative" id="process">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="inline-flex items-center gap-2 text-gold-400 text-sm font-semibold tracking-wider uppercase mb-4">
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                    How It Works
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                </div>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold mb-6">From Quote to Cash in 72 Hours</h2>
+                <p class="text-lg text-zinc-400">A streamlined process designed for busy scrap yards and recyclers.</p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="relative">
+                <!-- Connection Line -->
+                <div class="hidden lg:block absolute top-24 left-[10%] right-[10%] h-1 bg-gradient-to-r from-gold-400/20 via-gold-400 to-gold-400/20 rounded-full"></div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="relative group">
+                        <div class="text-center">
+                            <div class="relative inline-flex mb-8">
+                                <div class="w-20 h-20 rounded-2xl bg-dark-800 border-2 border-gold-500/50 flex items-center justify-center group-hover:border-gold-400 group-hover:shadow-lg group-hover:shadow-gold-500/20 transition-all duration-300 z-10 relative">
+                                    <i class="fas fa-file-signature text-gold-400 text-2xl"></i>
+                                </div>
+                                <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-dark-950 font-bold text-sm shadow-lg">
+                                    1
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Submit Request</h3>
+                            <p class="text-zinc-400 text-sm">Fill out our quick form with material type, estimated quantity, and your location.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative group">
+                        <div class="text-center">
+                            <div class="relative inline-flex mb-8">
+                                <div class="w-20 h-20 rounded-2xl bg-dark-800 border-2 border-gold-500/50 flex items-center justify-center group-hover:border-gold-400 group-hover:shadow-lg group-hover:shadow-gold-500/20 transition-all duration-300 z-10 relative">
+                                    <i class="fas fa-calculator text-gold-400 text-2xl"></i>
+                                </div>
+                                <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-dark-950 font-bold text-sm shadow-lg">
+                                    2
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Receive Quote</h3>
+                            <p class="text-zinc-400 text-sm">Get competitive, market-based pricing within 24 hours. No obligations.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative group">
+                        <div class="text-center">
+                            <div class="relative inline-flex mb-8">
+                                <div class="w-20 h-20 rounded-2xl bg-dark-800 border-2 border-gold-500/50 flex items-center justify-center group-hover:border-gold-400 group-hover:shadow-lg group-hover:shadow-gold-500/20 transition-all duration-300 z-10 relative">
+                                    <i class="fas fa-truck text-gold-400 text-2xl"></i>
+                                </div>
+                                <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-dark-950 font-bold text-sm shadow-lg">
+                                    3
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">We Pick Up</h3>
+                            <p class="text-zinc-400 text-sm">Schedule convenient pickup. Our crew handles loading and transportation.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative group">
+                        <div class="text-center">
+                            <div class="relative inline-flex mb-8">
+                                <div class="w-20 h-20 rounded-2xl bg-dark-800 border-2 border-gold-500/50 flex items-center justify-center group-hover:border-gold-400 group-hover:shadow-lg group-hover:shadow-gold-500/20 transition-all duration-300 z-10 relative">
+                                    <i class="fas fa-money-bill-wave text-gold-400 text-2xl"></i>
+                                </div>
+                                <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-dark-950 font-bold text-sm shadow-lg">
+                                    4
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Get Paid</h3>
+                            <p class="text-zinc-400 text-sm">Fast payment via wire transfer or check upon material verification.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-dark-900" id="faq">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 text-gold-400 text-sm font-semibold tracking-wider uppercase mb-4">
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                    FAQ
+                    <span class="w-8 h-px bg-gold-400/50"></span>
+                </div>
+                <h2 class="font-display text-4xl sm:text-5xl font-bold mb-6">Common Questions</h2>
+                <p class="text-lg text-zinc-400">Everything you need to know about selling your scrap to MetalVault.</p>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold pr-8">What minimum quantity do you accept?</span>
+                        <div class="w-10 h-10 rounded-xl bg-dark-700 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-plus text-gold-400 faq-icon transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+                        <div class="px-6 pb-6 text-zinc-400">
+                            We accept shipments starting at 500 lbs for specialty alloys like nickel and molybdenum. For tool steels and stainless, our minimum is typically 1,000 lbs. Smaller quantities may be accepted depending on material grade—contact us for specifics.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold pr-8">How do you determine pricing?</span>
+                        <div class="w-10 h-10 rounded-xl bg-dark-700 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-plus text-gold-400 faq-icon transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+                        <div class="px-6 pb-6 text-zinc-400">
+                            Our pricing is based on real-time London Metal Exchange (LME) rates, adjusted for alloy grade and purity. We use certified XRF analyzers to accurately identify material composition on-site, ensuring you get paid for exactly what you have.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold pr-8">What areas do you service?</span>
+                        <div class="w-10 h-10 rounded-xl bg-dark-700 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-plus text-gold-400 faq-icon transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+                        <div class="px-6 pb-6 text-zinc-400">
+                            MetalVault operates nationwide across all 50 US states, with primary hubs in Texas, Ohio, California, and New Jersey. For larger shipments, we also service Canada and Mexico. Our logistics team coordinates the most efficient pickup routes.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold pr-8">How fast will I get paid?</span>
+                        <div class="w-10 h-10 rounded-xl bg-dark-700 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-plus text-gold-400 faq-icon transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+                        <div class="px-6 pb-6 text-zinc-400">
+                            Once material is weighed and verified at our facility, payment is processed immediately. Wire transfers typically arrive same-day or next business day. We also offer check payment and ACH for established partners with net terms available.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item glass rounded-2xl border border-white/5 overflow-hidden">
+                    <button class="faq-trigger w-full flex items-center justify-between p-6 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold pr-8">Do I need to sort materials before pickup?</span>
+                        <div class="w-10 h-10 rounded-xl bg-dark-700 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-plus text-gold-400 faq-icon transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+                        <div class="px-6 pb-6 text-zinc-400">
+                            Pre-sorting generally results in better pricing since we can pay premium rates for identified grades. However, we accept mixed loads and use XRF testing to separate and grade materials. Our team can advise on the most cost-effective approach for your inventory.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-gold-600/20 via-gold-500/10 to-transparent"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold-500/10 rounded-full blur-[150px]"></div>
+
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
+                <span class="flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-sm text-zinc-300">Currently buying in your area</span>
+            </div>
+
+            <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+                Ready for <span class="gradient-text">Maximum Value</span>?
+            </h2>
+            <p class="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto">
+                Join 800+ scrap yards and recyclers who trust MetalVault for top prices, fast pickup, and reliable payment.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#quote" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-gold-400 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-dark-950 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:shadow-xl hover:shadow-gold-500/30">
+                    <i class="fas fa-paper-plane"></i>
+                    Get Your Free Quote
+                </a>
+                <a href="tel:+18005551234" class="inline-flex items-center justify-center gap-3 glass hover:bg-white/10 border border-white/10 hover:border-gold-500/30 px-8 py-4 rounded-xl font-bold text-lg transition-all">
+                    <i class="fas fa-phone text-gold-400"></i>
+                    1-800-555-1234
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-950 border-t border-white/5 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Company -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-11 h-11 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-gem text-dark-950 text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold">Metal<span class="text-gold-400">Vault</span></span>
+                        </div>
+                    </div>
+                    <p class="text-zinc-500 mb-6 max-w-md">America's premier buyer of high-value scrap metals. Specializing in nickel alloys, molybdenum, and tool steels with industry-leading pricing and service.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 rounded-xl glass hover:bg-gold-500/20 hover:border-gold-500/30 flex items-center justify-center transition-all">
+                            <i class="fab fa-linkedin-in text-zinc-400 hover:text-gold-400"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl glass hover:bg-gold-500/20 hover:border-gold-500/30 flex items-center justify-center transition-all">
+                            <i class="fab fa-twitter text-zinc-400 hover:text-gold-400"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl glass hover:bg-gold-500/20 hover:border-gold-500/30 flex items-center justify-center transition-all">
+                            <i class="fab fa-youtube text-zinc-400 hover:text-gold-400"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-zinc-500">
+                        <li><a href="#services" class="hover:text-gold-400 transition-colors">Our Services</a></li>
+                        <li><a href="#materials" class="hover:text-gold-400 transition-colors">Materials We Buy</a></li>
+                        <li><a href="#process" class="hover:text-gold-400 transition-colors">How It Works</a></li>
+                        <li><a href="#faq" class="hover:text-gold-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-semibold mb-6">Contact Us</h4>
+                    <ul class="space-y-4 text-zinc-500">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-gold-500 w-5"></i>
+                            <span>1-800-555-1234</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-gold-500 w-5"></i>
+                            <span>quotes@metalvault.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-gold-500 w-5 mt-1"></i>
+                            <span>4700 Industrial Blvd<br>Houston, TX 77001</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-zinc-600 text-sm">© 2025 MetalVault. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-zinc-600">
+                    <a href="#" class="hover:text-gold-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gold-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-gold-400 transition-colors">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // FAQ Toggle
+        function toggleFaq(button) {
+            const item = button.closest('.faq-item');
+            const content = item.querySelector('.faq-content');
+            const icon = item.querySelector('.faq-icon');
+            const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+            // Close all other items
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.querySelector('.faq-content').style.maxHeight = '0px';
+                    otherItem.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Toggle current item
+            if (isOpen) {
+                content.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        // Form Submission
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            this.previousElementSibling.style.display = 'none'; // Hide header
+            document.getElementById('successState').classList.remove('hidden');
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize counters when page loads
+        window.addEventListener('load', animateCounters);
+    </script>
+</body>
+</html>
